@@ -1,70 +1,109 @@
-.container{
-    border: 0px black solid;
-    width: 628px;
-    height: 700px;
+
+body, h1, form, div, span, input, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
-span{
-    font-size: 21px;
-    position: relative;
-    display: block;
-    top: 60px;
-    left: 23px;
-}
-
-#check{
-    position: relative;
-    top: 74px;
-    width: 290px;
-    border: 2px black solid;
-    height: 53px;
-    border-radius: 12px;
-    font-size: 18px;
-}
-
-#answer{
-    border: 2px black solid;
-    width: 294px;
-    height: 62px;
-    position: relative;
-    top: 136px;
-    font-size: 20px;
-    border-radius: 14px;
-    font-size: 28px;
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
     text-align: center;
 }
-#text{
-    position: relative;
-    top: 125px;
+
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    animation: text 2s linear infinite alternate;
 }
 
-#btn{
-    position: relative;
-    top: 186px;
-    width: 182px;
-    height: 56px;
+
+#check {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid black;
+    border-radius: 12px;
+    font-size: 1em;
+    margin: 10px 0 20px 0;
+}
+
+#answer {
+    border: 2px solid black;
+    padding: 15px;
+    border-radius: 14px;
+    font-size: 1.2em;
+    margin-top: 20px;
+    min-height: 60px;
+}
+
+#btn {
+    padding: 15px;
+    width: 60%; 
+    max-width: 200px; 
     border-radius: 36px;
-    left: 55px;
     color: white;
     background-color: #0037ff;
-    font-size: 20px;
+    font-size: 1em;
+    margin-top: 20px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
 }
-#btn:active{
+
+#btn:active {
     background-color: #3369c7;
 }
 
-#check:hover{
-    transform:scale(1.05,1.05)
+#check:hover {
+    transform: scale(1.05);
 }
-h1{
-    animation: text 2s linear 0s infinite alternate;
+
+input:focus, button:focus {
+    outline: none;
 }
+
 @keyframes text {
-    100%{
-        transform: translate(40px);
+    100% {
+        transform: translate(10px);
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    #check, #btn, #answer {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.2em;
+    }
+
+    #check, #btn, #answer {
+        font-size: 0.9em;
+    }
+
+    #btn {
+        padding: 12px;
+        width: 70%; 
+        border-radius: 30px;
     }
 }
