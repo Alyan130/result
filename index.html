@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>GIAIC QUARTER 1 EXAM RESULT</title>
+</head>
+<body>
+    <div class="container">
+        <h1>GIAIC QUARTER 1 EXAM RESULT</h1>
+        <form id="resultForm">
+            <span>Enter your roll number:</span>
+            <input type="text" placeholder="Roll-Number" id="check" required>
+            <span id="text">Result:</span>
+            <div id="answer"></div>
+            <button type="submit" id="btn">Check</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script>
+        document.getElementById('resultForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Clear previous result
+            const answerDiv = document.getElementById('answer');
+            answerDiv.textContent = ""; 
+            const btn = document.getElementById('btn');
+            btn.disabled = true;
+
+            const rollNumber = document.getElementById('check').value.trim();
+
+
+            const filePath = 'result.xlsx';
+            fetch(filePath)
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                
+                    const header = jsonData[0];
+                    const resultData = jsonData.slice(1).map(row => ({
+                        registrationNumber: String(row[header.indexOf('Student_Registration_Number')]).trim().toLowerCase(),
+                        examResult: row[header.indexOf('Quarter 1 Exam Result')]
+                    }));
+
+                    const studentResult = resultData.find(item => item.registrationNumber === rollNumber.toLowerCase());
+
+                    if (studentResult) {
+                        answerDiv.textContent = studentResult.examResult;
+                        answerDiv.style.color = "green"; 
+                    } else {
+                        answerDiv.textContent = "Fail";
+                        answerDiv.style.color = "red";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error reading the Excel file:', error);
+                    answerDiv.textContent = "Error: Unable to load results.";
+                    answerDiv.style.color = "red";
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                });
+        });
+    </script>
+</body>
+</html>
